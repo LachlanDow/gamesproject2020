@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/font_default.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Levels/returnToTitle.gd" type="Script" id=2]
+
+[node name="Help" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 463.0
+margin_top = 263.0
+margin_right = 817.0
+margin_bottom = 456.0
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+margin_right = 354.0
+margin_bottom = 123.0
+custom_fonts/font = ExtResource( 1 )
+text = "HELP SCREEN
+"
+
+[node name="Button" type="Button" parent="CenterContainer/VBoxContainer"]
+margin_top = 127.0
+margin_right = 354.0
+margin_bottom = 193.0
+custom_fonts/font = ExtResource( 1 )
+text = "Back"
+script = ExtResource( 2 )
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Button" to="CenterContainer/VBoxContainer/Button" method="_on_Button_pressed"]

@@ -2,6 +2,9 @@ extends Actor
 
 
 export var stomp_impulse: = 600.0
+var _scale = Vector2(1,1)
+var jump_scaling = 1
+onready var anim_player: AnimationPlayer = get_node("player").get_node("AnimationPlayer")
 
 
 func _on_StompDetector_area_entered(area: Area2D) -> void:
@@ -20,7 +23,32 @@ func _physics_process(delta: float) -> void:
 	_velocity = move_and_slide_with_snap(
 		_velocity, snap, FLOOR_NORMAL, true
 	)
+	if Input.is_action_just_pressed("jump") :
+		anim_player.play("jump")
+		anim_player.emit_signal("animation_finished")
+		
+	if Input.is_action_just_pressed("move_left"):
+		anim_player.play("idle_left")
+		
+	if Input.is_action_just_pressed("move_right"):
+		anim_player.play("idle_right")
+	
+		
 
+		
+		
+	if Input.is_action_just_pressed("size_up"):
+		_scale = _scale+Vector2(20*delta,20*delta)
+		set_scale(_scale)
+		gravity = gravity + 300
+		
+		
+	if Input.is_action_just_pressed("size_down"):
+		_scale = _scale+Vector2(10*-delta,10*-delta)
+		set_scale(_scale)
+		gravity = gravity -300
+	
+		
 
 func get_direction() -> Vector2:
 	return Vector2(
@@ -49,5 +77,15 @@ func calculate_stomp_velocity(linear_velocity: Vector2, stomp_impulse: float) ->
 	return Vector2(linear_velocity.x, stomp_jump)
 
 
+
 func die() -> void:
 	queue_free()
+
+
+
+
+
+
+
+func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
+	anim_player.play("idle_right")

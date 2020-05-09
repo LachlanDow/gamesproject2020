@@ -1,18 +1,89 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Actors/Player.gd" type="Script" id=1]
-[ext_resource path="res://assets/player.png" type="Texture" id=2]
+[ext_resource path="res://assets/pngwing.com.png" type="Texture" id=2]
 
-[sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( -47.7193, -80.1353, -45.552, -86.1556, -40.2541, -93.1392, -32.7889, -96.9922, 32.4715, -96.5106, 38.7327, -94.5841, 44.9938, -89.0453, 47.6427, -82.0618, 48.1244, -17.5238, 45.957, -10.2994, 41.6224, -5.00154, 33.9164, 0.296349, -31.1032, -0.18528, -39.5316, -4.2791, -45.0704, -10.0586, -47.4785, -16.5606 )
+[sub_resource type="Animation" id=9]
+resource_name = "idle_left"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 40, 40, 59, 103 ), Rect2( 184, 39, 61, 104 ), Rect2( 329, 41, 62, 102 ), Rect2( 471, 39, 61, 104 ), Rect2( 617, 40, 60, 103 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 40, 41 )
+[sub_resource type="Animation" id=1]
+resource_name = "idle_right"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 40, 40, 59, 103 ), Rect2( 184, 39, 61, 104 ), Rect2( 329, 41, 62, 102 ), Rect2( 471, 39, 61, 104 ), Rect2( 617, 40, 60, 103 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 0
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 45.6478, 41.7715 )
+[sub_resource type="Animation" id=2]
+resource_name = "jump"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 50, 208, 51, 80 ), Rect2( 196, 146, 34, 141 ), Rect2( 331, 167, 55, 111 ), Rect2( 462, 172, 74, 101 ), Rect2( 616, 180, 77, 86 ) ]
+}
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 30.6549, 43.5984 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 24.5429, 45.0307 )
+
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 52.2752, 10.7155 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -33,16 +104,21 @@ drag_margin_right = 0.0
 editor_draw_limits = true
 editor_draw_drag_margin = true
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="player" type="Sprite" parent="."]
+position = Vector2( 4.02016, -40.0914 )
+scale = Vector2( 0.845142, 0.887087 )
 texture = ExtResource( 2 )
-offset = Vector2( 0, -48.3333 )
+region_enabled = true
+region_rect = Rect2( 40, 40, 59, 103 )
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Sprite"]
-occluder = SubResource( 1 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player"]
+anims/idle_left = SubResource( 9 )
+anims/idle_right = SubResource( 1 )
+anims/jump = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -41 )
-shape = SubResource( 2 )
+position = Vector2( 1.99028, -41.6634 )
+shape = SubResource( 6 )
 
 [node name="EnemyDetector" type="Area2D" parent="."]
 collision_layer = 0
@@ -50,15 +126,16 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
 modulate = Color( 0.337255, 0.223529, 1, 1 )
-position = Vector2( 0, -48 )
-shape = SubResource( 3 )
+position = Vector2( 0.254732, -31.3663 )
+shape = SubResource( 7 )
 
 [node name="StompDetector" type="Area2D" parent="."]
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StompDetector"]
 modulate = Color( 0.337255, 0.223529, 1, 1 )
-position = Vector2( 0, -4.76657 )
-shape = SubResource( 4 )
+position = Vector2( 3.98055, 7.17501 )
+shape = SubResource( 8 )
+[connection signal="animation_finished" from="player/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="EnemyDetector" to="." method="_on_EnemyDetector_body_entered"]
 [connection signal="area_entered" from="StompDetector" to="." method="_on_StompDetector_area_entered"]
